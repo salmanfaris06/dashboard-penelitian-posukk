@@ -1,0 +1,2107 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "c424bc7e-e7fe-476c-9ba9-eca23a7de235",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "activity_schedules": {
+      "name": "activity_schedules",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_by_user_id": {
+          "name": "created_by_user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "starts_at": {
+          "name": "starts_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ends_at": {
+          "name": "ends_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "location": {
+          "name": "location",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'scheduled'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "schedules_center_starts_idx": {
+          "name": "schedules_center_starts_idx",
+          "columns": ["pos_ukk_center_id", "starts_at"],
+          "isUnique": false
+        },
+        "schedules_status_starts_idx": {
+          "name": "schedules_status_starts_idx",
+          "columns": ["status", "starts_at"],
+          "isUnique": false
+        },
+        "schedules_creator_idx": {
+          "name": "schedules_creator_idx",
+          "columns": ["created_by_user_id"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "activity_schedules_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "activity_schedules_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "activity_schedules",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "activity_schedules_created_by_user_id_users_id_fk": {
+          "name": "activity_schedules_created_by_user_id_users_id_fk",
+          "tableFrom": "activity_schedules",
+          "tableTo": "users",
+          "columnsFrom": ["created_by_user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "application_evaluations": {
+      "name": "application_evaluations",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "respondent_user_id": {
+          "name": "respondent_user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "submitted_at": {
+          "name": "submitted_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "answers": {
+          "name": "answers",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "total_score": {
+          "name": "total_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "average_score": {
+          "name": "average_score",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "application_evaluations_respondent_user_id_unique": {
+          "name": "application_evaluations_respondent_user_id_unique",
+          "columns": ["respondent_user_id"],
+          "isUnique": true
+        },
+        "evaluation_center_submitted_idx": {
+          "name": "evaluation_center_submitted_idx",
+          "columns": ["pos_ukk_center_id", "submitted_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "application_evaluations_respondent_user_id_users_id_fk": {
+          "name": "application_evaluations_respondent_user_id_users_id_fk",
+          "tableFrom": "application_evaluations",
+          "tableTo": "users",
+          "columnsFrom": ["respondent_user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "application_evaluations_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "application_evaluations_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "application_evaluations",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "artisans": {
+      "name": "artisans",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cadre_id": {
+          "name": "cadre_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "respondent_number": {
+          "name": "respondent_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "identity_number": {
+          "name": "identity_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "birth_date": {
+          "name": "birth_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "age": {
+          "name": "age",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sex": {
+          "name": "sex",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "education_level": {
+          "name": "education_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "monthly_income": {
+          "name": "monthly_income",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "work_tenure_years": {
+          "name": "work_tenure_years",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "work_hours_per_day": {
+          "name": "work_hours_per_day",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "rest_hours_per_day": {
+          "name": "rest_hours_per_day",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "occupation": {
+          "name": "occupation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'Pasien Batik'"
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "artisans_center_respondent_uidx": {
+          "name": "artisans_center_respondent_uidx",
+          "columns": ["pos_ukk_center_id", "respondent_number"],
+          "isUnique": true
+        },
+        "artisans_center_name_idx": {
+          "name": "artisans_center_name_idx",
+          "columns": ["pos_ukk_center_id", "name"],
+          "isUnique": false
+        },
+        "artisans_cadre_created_idx": {
+          "name": "artisans_cadre_created_idx",
+          "columns": ["cadre_id", "created_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "artisans_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "artisans_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "artisans",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artisans_cadre_id_users_id_fk": {
+          "name": "artisans_cadre_id_users_id_fk",
+          "tableFrom": "artisans",
+          "tableTo": "users",
+          "columnsFrom": ["cadre_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "exercise_contents": {
+      "name": "exercise_contents",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "author_user_id": {
+          "name": "author_user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "body_area": {
+          "name": "body_area",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "summary": {
+          "name": "summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "instructions": {
+          "name": "instructions",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "media_url": {
+          "name": "media_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'draft'"
+        },
+        "published_at": {
+          "name": "published_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "exercise_status_published_idx": {
+          "name": "exercise_status_published_idx",
+          "columns": ["status", "published_at"],
+          "isUnique": false
+        },
+        "exercise_body_category_idx": {
+          "name": "exercise_body_category_idx",
+          "columns": ["body_area", "category"],
+          "isUnique": false
+        },
+        "exercise_author_idx": {
+          "name": "exercise_author_idx",
+          "columns": ["author_user_id"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "exercise_contents_author_user_id_users_id_fk": {
+          "name": "exercise_contents_author_user_id_users_id_fk",
+          "tableFrom": "exercise_contents",
+          "tableTo": "users",
+          "columnsFrom": ["author_user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "health_assessments": {
+      "name": "health_assessments",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "artisan_id": {
+          "name": "artisan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cadre_id": {
+          "name": "cadre_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "assessed_at": {
+          "name": "assessed_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "height_cm": {
+          "name": "height_cm",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "weight_kg": {
+          "name": "weight_kg",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "bmi": {
+          "name": "bmi",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "blood_pressure": {
+          "name": "blood_pressure",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cholesterol_mg_dl": {
+          "name": "cholesterol_mg_dl",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "blood_glucose_mg_dl": {
+          "name": "blood_glucose_mg_dl",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "uric_acid_mg_dl": {
+          "name": "uric_acid_mg_dl",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "has_hypertension": {
+          "name": "has_hypertension",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "has_diabetes": {
+          "name": "has_diabetes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "has_gout": {
+          "name": "has_gout",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "has_hypercholesterolemia": {
+          "name": "has_hypercholesterolemia",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "other_diseases": {
+          "name": "other_diseases",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "uses_medication": {
+          "name": "uses_medication",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "medication_notes": {
+          "name": "medication_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "complaint_duration": {
+          "name": "complaint_duration",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "current_complaint": {
+          "name": "current_complaint",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aggravated_by_walking": {
+          "name": "aggravated_by_walking",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "aggravated_by_sitting": {
+          "name": "aggravated_by_sitting",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "aggravated_by_activity": {
+          "name": "aggravated_by_activity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "pain_location": {
+          "name": "pain_location",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pain_type": {
+          "name": "pain_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "has_joint_stiffness": {
+          "name": "has_joint_stiffness",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "range_of_motion": {
+          "name": "range_of_motion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "has_swelling": {
+          "name": "has_swelling",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "palpation_status": {
+          "name": "palpation_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sit_to_stand_result": {
+          "name": "sit_to_stand_result",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "therapy_plan": {
+          "name": "therapy_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "health_center_assessed_idx": {
+          "name": "health_center_assessed_idx",
+          "columns": ["pos_ukk_center_id", "assessed_at"],
+          "isUnique": false
+        },
+        "health_artisan_assessed_idx": {
+          "name": "health_artisan_assessed_idx",
+          "columns": ["artisan_id", "assessed_at"],
+          "isUnique": false
+        },
+        "health_cadre_assessed_idx": {
+          "name": "health_cadre_assessed_idx",
+          "columns": ["cadre_id", "assessed_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "health_assessments_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "health_assessments_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "health_assessments",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "health_assessments_artisan_id_artisans_id_fk": {
+          "name": "health_assessments_artisan_id_artisans_id_fk",
+          "tableFrom": "health_assessments",
+          "tableTo": "artisans",
+          "columnsFrom": ["artisan_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "health_assessments_cadre_id_users_id_fk": {
+          "name": "health_assessments_cadre_id_users_id_fk",
+          "tableFrom": "health_assessments",
+          "tableTo": "users",
+          "columnsFrom": ["cadre_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "health_data_audits": {
+      "name": "health_data_audits",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actor_user_id": {
+          "name": "actor_user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actor_type": {
+          "name": "actor_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'user'"
+        },
+        "event": {
+          "name": "event",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "auditable_type": {
+          "name": "auditable_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "auditable_id": {
+          "name": "auditable_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "changed_fields": {
+          "name": "changed_fields",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "occurred_at": {
+          "name": "occurred_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "audits_center_occurred_idx": {
+          "name": "audits_center_occurred_idx",
+          "columns": ["pos_ukk_center_id", "occurred_at"],
+          "isUnique": false
+        },
+        "audits_target_idx": {
+          "name": "audits_target_idx",
+          "columns": ["auditable_type", "auditable_id"],
+          "isUnique": false
+        },
+        "audits_actor_occurred_idx": {
+          "name": "audits_actor_occurred_idx",
+          "columns": ["actor_user_id", "occurred_at"],
+          "isUnique": false
+        },
+        "audits_event_occurred_idx": {
+          "name": "audits_event_occurred_idx",
+          "columns": ["event", "occurred_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "health_data_audits_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "health_data_audits_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "health_data_audits",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "health_data_audits_actor_user_id_users_id_fk": {
+          "name": "health_data_audits_actor_user_id_users_id_fk",
+          "tableFrom": "health_data_audits",
+          "tableTo": "users",
+          "columnsFrom": ["actor_user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "lbp_pain_duration_options": {
+      "name": "lbp_pain_duration_options",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "lbp_pain_duration_options_label_unique": {
+          "name": "lbp_pain_duration_options_label_unique",
+          "columns": ["label"],
+          "isUnique": true
+        },
+        "lbp_duration_active_sort_idx": {
+          "name": "lbp_duration_active_sort_idx",
+          "columns": ["is_active", "sort_order"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "lbp_screenings": {
+      "name": "lbp_screenings",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "artisan_id": {
+          "name": "artisan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cadre_id": {
+          "name": "cadre_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lbp_pain_duration_option_id": {
+          "name": "lbp_pain_duration_option_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "screened_at": {
+          "name": "screened_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "item_01_score": {
+          "name": "item_01_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_02_score": {
+          "name": "item_02_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_03_score": {
+          "name": "item_03_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_04_score": {
+          "name": "item_04_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_05_score": {
+          "name": "item_05_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_06_score": {
+          "name": "item_06_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_07_score": {
+          "name": "item_07_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_08_score": {
+          "name": "item_08_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_09_score": {
+          "name": "item_09_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_10_score": {
+          "name": "item_10_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_11_score": {
+          "name": "item_11_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_12_score": {
+          "name": "item_12_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_13_score": {
+          "name": "item_13_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_14_score": {
+          "name": "item_14_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_15_score": {
+          "name": "item_15_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_16_score": {
+          "name": "item_16_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_17_score": {
+          "name": "item_17_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_18_score": {
+          "name": "item_18_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_19_score": {
+          "name": "item_19_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "item_20_score": {
+          "name": "item_20_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "total_score": {
+          "name": "total_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mean_score": {
+          "name": "mean_score",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "lbp_center_screened_idx": {
+          "name": "lbp_center_screened_idx",
+          "columns": ["pos_ukk_center_id", "screened_at"],
+          "isUnique": false
+        },
+        "lbp_artisan_screened_idx": {
+          "name": "lbp_artisan_screened_idx",
+          "columns": ["artisan_id", "screened_at"],
+          "isUnique": false
+        },
+        "lbp_cadre_screened_idx": {
+          "name": "lbp_cadre_screened_idx",
+          "columns": ["cadre_id", "screened_at"],
+          "isUnique": false
+        },
+        "lbp_category_screened_idx": {
+          "name": "lbp_category_screened_idx",
+          "columns": ["category", "screened_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "lbp_screenings_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "lbp_screenings_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "lbp_screenings",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "lbp_screenings_artisan_id_artisans_id_fk": {
+          "name": "lbp_screenings_artisan_id_artisans_id_fk",
+          "tableFrom": "lbp_screenings",
+          "tableTo": "artisans",
+          "columnsFrom": ["artisan_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "lbp_screenings_cadre_id_users_id_fk": {
+          "name": "lbp_screenings_cadre_id_users_id_fk",
+          "tableFrom": "lbp_screenings",
+          "tableTo": "users",
+          "columnsFrom": ["cadre_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "lbp_screenings_lbp_pain_duration_option_id_lbp_pain_duration_options_id_fk": {
+          "name": "lbp_screenings_lbp_pain_duration_option_id_lbp_pain_duration_options_id_fk",
+          "tableFrom": "lbp_screenings",
+          "tableTo": "lbp_pain_duration_options",
+          "columnsFrom": ["lbp_pain_duration_option_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "msd_risk_assessments": {
+      "name": "msd_risk_assessments",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "artisan_id": {
+          "name": "artisan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cadre_id": {
+          "name": "cadre_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "screened_at": {
+          "name": "screened_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "pain_scale": {
+          "name": "pain_scale",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pain_level": {
+          "name": "pain_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pain_location": {
+          "name": "pain_location",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "stiffness_frequency": {
+          "name": "stiffness_frequency",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "stiffness_level": {
+          "name": "stiffness_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "abnormal_sensation_status": {
+          "name": "abnormal_sensation_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "abnormal_sensation_level": {
+          "name": "abnormal_sensation_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "muscle_fatigue_status": {
+          "name": "muscle_fatigue_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "muscle_fatigue_level": {
+          "name": "muscle_fatigue_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "posture_method": {
+          "name": "posture_method",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "posture_score": {
+          "name": "posture_score",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "posture_level": {
+          "name": "posture_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "repetitive_motion_per_hour": {
+          "name": "repetitive_motion_per_hour",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "repetitive_motion_level": {
+          "name": "repetitive_motion_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "exposure_duration_hours": {
+          "name": "exposure_duration_hours",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "exposure_duration_level": {
+          "name": "exposure_duration_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "strength_flexibility_status": {
+          "name": "strength_flexibility_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "strength_flexibility_level": {
+          "name": "strength_flexibility_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "inflammation_sign_status": {
+          "name": "inflammation_sign_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "inflammation_sign_level": {
+          "name": "inflammation_sign_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "environment_workload_status": {
+          "name": "environment_workload_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "environment_workload_level": {
+          "name": "environment_workload_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "final_risk_category": {
+          "name": "final_risk_category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "msd_center_screened_idx": {
+          "name": "msd_center_screened_idx",
+          "columns": ["pos_ukk_center_id", "screened_at"],
+          "isUnique": false
+        },
+        "msd_artisan_screened_idx": {
+          "name": "msd_artisan_screened_idx",
+          "columns": ["artisan_id", "screened_at"],
+          "isUnique": false
+        },
+        "msd_cadre_screened_idx": {
+          "name": "msd_cadre_screened_idx",
+          "columns": ["cadre_id", "screened_at"],
+          "isUnique": false
+        },
+        "msd_risk_screened_idx": {
+          "name": "msd_risk_screened_idx",
+          "columns": ["final_risk_category", "screened_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "msd_risk_assessments_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "msd_risk_assessments_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "msd_risk_assessments",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "msd_risk_assessments_artisan_id_artisans_id_fk": {
+          "name": "msd_risk_assessments_artisan_id_artisans_id_fk",
+          "tableFrom": "msd_risk_assessments",
+          "tableTo": "artisans",
+          "columnsFrom": ["artisan_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "msd_risk_assessments_cadre_id_users_id_fk": {
+          "name": "msd_risk_assessments_cadre_id_users_id_fk",
+          "tableFrom": "msd_risk_assessments",
+          "tableTo": "users",
+          "columnsFrom": ["cadre_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "physical_independence_assessments": {
+      "name": "physical_independence_assessments",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "artisan_id": {
+          "name": "artisan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cadre_id": {
+          "name": "cadre_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "assessed_at": {
+          "name": "assessed_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "walking_status": {
+          "name": "walking_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sitting_status": {
+          "name": "sitting_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "standing_status": {
+          "name": "standing_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "work_activity_status": {
+          "name": "work_activity_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sit_to_stand_status": {
+          "name": "sit_to_stand_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "score": {
+          "name": "score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "pia_center_assessed_idx": {
+          "name": "pia_center_assessed_idx",
+          "columns": ["pos_ukk_center_id", "assessed_at"],
+          "isUnique": false
+        },
+        "pia_artisan_assessed_idx": {
+          "name": "pia_artisan_assessed_idx",
+          "columns": ["artisan_id", "assessed_at"],
+          "isUnique": false
+        },
+        "pia_cadre_assessed_idx": {
+          "name": "pia_cadre_assessed_idx",
+          "columns": ["cadre_id", "assessed_at"],
+          "isUnique": false
+        },
+        "pia_category_assessed_idx": {
+          "name": "pia_category_assessed_idx",
+          "columns": ["category", "assessed_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "physical_independence_assessments_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "physical_independence_assessments_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "physical_independence_assessments",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "physical_independence_assessments_artisan_id_artisans_id_fk": {
+          "name": "physical_independence_assessments_artisan_id_artisans_id_fk",
+          "tableFrom": "physical_independence_assessments",
+          "tableTo": "artisans",
+          "columnsFrom": ["artisan_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "physical_independence_assessments_cadre_id_users_id_fk": {
+          "name": "physical_independence_assessments_cadre_id_users_id_fk",
+          "tableFrom": "physical_independence_assessments",
+          "tableTo": "users",
+          "columnsFrom": ["cadre_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "pos_ukk_centers": {
+      "name": "pos_ukk_centers",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "leader_name": {
+          "name": "leader_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "contact_phone": {
+          "name": "contact_phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "district": {
+          "name": "district",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "city": {
+          "name": "city",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'Jambi'"
+        },
+        "cadre_count": {
+          "name": "cadre_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "established_at": {
+          "name": "established_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "pos_ukk_centers_name_unique": {
+          "name": "pos_ukk_centers_name_unique",
+          "columns": ["name"],
+          "isUnique": true
+        },
+        "pos_ukk_centers_code_unique": {
+          "name": "pos_ukk_centers_code_unique",
+          "columns": ["code"],
+          "isUnique": true
+        },
+        "centers_active_district_idx": {
+          "name": "centers_active_district_idx",
+          "columns": ["is_active", "district"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "sessions": {
+      "name": "sessions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "token_hash": {
+          "name": "token_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "sessions_token_hash_unique": {
+          "name": "sessions_token_hash_unique",
+          "columns": ["token_hash"],
+          "isUnique": true
+        },
+        "sessions_user_expires_idx": {
+          "name": "sessions_user_expires_idx",
+          "columns": ["user_id", "expires_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "sessions_user_id_users_id_fk": {
+          "name": "sessions_user_id_users_id_fk",
+          "tableFrom": "sessions",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "users": {
+      "name": "users",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pos_ukk_center_id": {
+          "name": "pos_ukk_center_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email_verified_at": {
+          "name": "email_verified_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'cadre'"
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "columns": ["email"],
+          "isUnique": true
+        },
+        "users_role_active_center_idx": {
+          "name": "users_role_active_center_idx",
+          "columns": ["role", "is_active", "pos_ukk_center_id"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "users_pos_ukk_center_id_pos_ukk_centers_id_fk": {
+          "name": "users_pos_ukk_center_id_pos_ukk_centers_id_fk",
+          "tableFrom": "users",
+          "tableTo": "pos_ukk_centers",
+          "columnsFrom": ["pos_ukk_center_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
