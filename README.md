@@ -46,14 +46,10 @@ npm run dev
 
 Buka `http://localhost:3000`.
 
-Akun seed lokal:
-
-| Role          | Email                 | Password   |
-| ------------- | --------------------- | ---------- |
-| Administrator | `admin@epos-ukk.test` | `password` |
-| Kader         | `kader@epos-ukk.test` | `password` |
-
-> Ganti kata sandi seed sebelum production.
+Akun seed lokal menggunakan email `admin@epos-ukk.test` dan
+`kader@epos-ukk.test`. Password tidak disimpan di source; isi
+`SEED_ADMIN_PASSWORD` dan `SEED_CADRE_PASSWORD` dengan nilai yang kuat sebelum
+menjalankan seed.
 
 ## Konfigurasi Turso
 

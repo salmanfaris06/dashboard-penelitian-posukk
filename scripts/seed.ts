@@ -3,7 +3,22 @@ import { eq } from 'drizzle-orm'
 import { db, libsql } from '../src/db/client'
 import { lbpPainDurationOptions, posUkkCenters, users } from '../src/db/schema'
 
-const passwordHash = await hash('password', 12)
+const adminPassword = process.env.SEED_ADMIN_PASSWORD
+const cadrePassword = process.env.SEED_CADRE_PASSWORD
+const existingAdminHash = process.env.SEED_ADMIN_PASSWORD_HASH
+const existingCadreHash = process.env.SEED_CADRE_PASSWORD_HASH
+if (
+  (!adminPassword && !existingAdminHash) ||
+  (!cadrePassword && !existingCadreHash)
+) {
+  throw new Error(
+    'Isi SEED_ADMIN_PASSWORD dan SEED_CADRE_PASSWORD, atau berikan hash migrasi yang setara.',
+  )
+}
+const [adminPasswordHash, cadrePasswordHash] = await Promise.all([
+  existingAdminHash ?? hash(adminPassword!, 12),
+  existingCadreHash ?? hash(cadrePassword!, 12),
+])
 
 await db
   .insert(posUkkCenters)
@@ -29,7 +44,7 @@ await db
   .values({
     name: 'Administrator E-Pos UKK',
     email: 'admin@epos-ukk.test',
-    passwordHash,
+    passwordHash: adminPasswordHash,
     role: 'administrator',
     isActive: true,
     phone: '081200000001',
@@ -37,7 +52,11 @@ await db
   })
   .onConflictDoUpdate({
     target: users.email,
-    set: { passwordHash, role: 'administrator', isActive: true },
+    set: {
+      passwordHash: adminPasswordHash,
+      role: 'administrator',
+      isActive: true,
+    },
   })
 
 await db
@@ -45,7 +64,7 @@ await db
   .values({
     name: 'Kader Kapal Sanggat',
     email: 'kader@epos-ukk.test',
-    passwordHash,
+    passwordHash: cadrePasswordHash,
     role: 'cadre',
     isActive: true,
     phone: '081200000002',
@@ -55,7 +74,7 @@ await db
   .onConflictDoUpdate({
     target: users.email,
     set: {
-      passwordHash,
+      passwordHash: cadrePasswordHash,
       role: 'cadre',
       isActive: true,
       posUkkCenterId: center.id,
